@@ -20,8 +20,6 @@ import { useParams } from "next/navigation";
 import { useAuth, useSession } from "@clerk/nextjs";
 import ActionMenu from "@/Components/ActionMenu";
 
-const fileFolders = [];
-
 export default function classroom() {
   const [socket, setSocket] = useState<Socket | null>(null);
   const { classid } = useParams();
@@ -34,7 +32,7 @@ export default function classroom() {
         const token = await getToken();
 
         setSocket(
-          io("https://a5e9-103-21-126-81.ngrok-free.app", {
+          io("https://5117-103-21-126-81.ngrok-free.app", {
             auth: {
               userId,
               token, //: `Bearer ${token}`,
@@ -57,13 +55,13 @@ export default function classroom() {
         title: "Joined Classroom",
         description: `Authenticated for class ${classid}`,
         status: "success",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
       });
     });
   }, [socket]);
   return (
-    <main className="bg-slate-800 flex h-screen justify-between p-2">
+    <main className="flex justify-between">
       {/* the left side */}
       {socket && (
         <div className="hidden w-64 pl-8 pt-8 lg:block">
