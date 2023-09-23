@@ -22,7 +22,7 @@ import ActionMenu from "@/Components/ActionMenu";
 
 export default function classroom() {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const { classid } = useParams();
+  const { classid }: any = useParams();
   const { userId, getToken } = useAuth();
   const { session } = useSession();
   const toast = useToast();
@@ -32,7 +32,7 @@ export default function classroom() {
         const token = await getToken();
 
         setSocket(
-          io("https://5117-103-21-126-81.ngrok-free.app", {
+          io("https://964c-103-21-126-81.ngrok-free.app", {
             auth: {
               userId,
               token, //: `Bearer ${token}`,
@@ -102,6 +102,7 @@ export default function classroom() {
       {/* right side with userprofile & live chat */}
       <div className="flex flex-col col-span-1 text-gray-800 pt-2 pr-4 pb-4">
         {socket && <ActionMenu />}
+
         {socket && (
           <Chatbox socket={socket} classid={classid} session={session} />
         )}
