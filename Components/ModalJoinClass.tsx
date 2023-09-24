@@ -9,22 +9,44 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useToast,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 const ModalJoinClass = ({ isOpen, onClose }) => {
   const [classid, setclassid] = useState();
   const [validating, setValidating] = useState(false);
-  const handleInputChange = (event) => {
+  const toast = useToast();
+  const router = useRouter();
+  const handleInputChange = (event: any) => {
     setclassid(event.target.value);
   };
 
   //   validate from backend pending
   const handleJoinClass = () => {
     setValidating(true);
+
+    //pending also check for validity
+    if (!classid) {
+      toast({
+        title: "Class ID is required",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      setValidating(false);
+    }
+    toast({
+      title: "Valid classid, Joining class...",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
     setTimeout(() => {
       setValidating(false);
+      router.push(`/class/${classid}`);
     }, 2000);
   };
   return (
