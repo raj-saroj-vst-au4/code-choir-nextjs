@@ -32,7 +32,7 @@ export default function classroom() {
         const token = await getToken();
 
         setSocket(
-          io("https://964c-103-21-126-81.ngrok-free.app", {
+          io("http://localhost:3002", {
             auth: {
               userId,
               token, //: `Bearer ${token}`,

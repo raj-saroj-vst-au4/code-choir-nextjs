@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Center,
+  Checkbox,
   Divider,
   HStack,
   Input,
@@ -36,11 +37,17 @@ const steps = [
 const Schedule = () => {
   const toast = useToast();
   const [msg, setMsg] = useState();
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+  const [checkedItems, setCheckedItems] = React.useState([false, false]);
+  const allChecked = checkedItems.every(Boolean);
+  const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
   const [value, setValue] = React.useState("1");
   const { activeStep, setActiveStep } = useSteps({
     index: 1,
     count: steps.length,
   });
+
   return (
     <div className="p-4">
       <ActionMenu />
@@ -112,10 +119,101 @@ const Schedule = () => {
           </div>
           <div className={activeStep === 2 ? "block" : "hidden"}>
             <h2 className="text-3xl font-bold text-center mb-3">Date & Time</h2>
-            <div className="flex justify-center">
+            <div className="flex justify-around">
               <HStack>
-                <Input placeholder="Date" />
-                <Input placeholder="Time" />
+                <Input type="date" placeholder="Date" onChange={setDate} />
+                <Input type="time" placeholder="Time" onChange={setTime} />
+              </HStack>
+            </div>
+            <div className="flex justify-around mt-8">
+              <Button
+                leftIcon={<BsCaretLeftFill />}
+                colorScheme="blue"
+                variant="outline"
+                onClick={() => {
+                  setActiveStep(1);
+                }}
+              >
+                Previous
+              </Button>
+              <Center height="30px">
+                <Divider orientation="vertical" />
+              </Center>
+              <Button
+                rightIcon={<BsCaretRightFill />}
+                colorScheme="blue"
+                variant="outline"
+                onClick={() => {
+                  setActiveStep(3);
+                }}
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+          <div className={activeStep === 3 ? "block" : "hidden"}>
+            <h2 className="text-3xl font-bold text-center mb-3">Configure</h2>
+            <div className="flex justify-around">
+              <HStack>
+                <Checkbox
+                  isChecked={allChecked}
+                  isIndeterminate={isIndeterminate}
+                  onChange={(e) =>
+                    setCheckedItems([e.target.checked, e.target.checked])
+                  }
+                >
+                  Parent Checkbox
+                </Checkbox>
+                <Stack pl={6} mt={1} spacing={1}>
+                  <Checkbox
+                    isChecked={checkedItems[0]}
+                    onChange={(e) =>
+                      setCheckedItems([e.target.checked, checkedItems[1]])
+                    }
+                  >
+                    Child Checkbox 1
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={checkedItems[1]}
+                    onChange={(e) =>
+                      setCheckedItems([checkedItems[0], e.target.checked])
+                    }
+                  >
+                    Child Checkbox 2
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={checkedItems[2]}
+                    onChange={(e) =>
+                      setCheckedItems([checkedItems[1], e.target.checked])
+                    }
+                  >
+                    Child Checkbox 3
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={checkedItems[3]}
+                    onChange={(e) =>
+                      setCheckedItems([checkedItems[2], e.target.checked])
+                    }
+                  >
+                    Child Checkbox 4
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={checkedItems[4]}
+                    onChange={(e) =>
+                      setCheckedItems([checkedItems[3], e.target.checked])
+                    }
+                  >
+                    Child Checkbox 5
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={checkedItems[5]}
+                    onChange={(e) =>
+                      setCheckedItems([checkedItems[4], e.target.checked])
+                    }
+                  >
+                    Child Checkbox 6
+                  </Checkbox>
+                </Stack>
               </HStack>
             </div>
             <div className="flex justify-around mt-8">
